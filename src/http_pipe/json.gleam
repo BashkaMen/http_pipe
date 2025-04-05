@@ -1,10 +1,10 @@
 import http_pipe/common.{choose, combine}
-import http_pipe/response.{set_code, set_header, write_body_utf8}
+import http_pipe/response.{set_code, set_header}
 
-pub fn write_body_utf8(json) {
+pub fn write_body_utf8(json: String) {
   combine([
     set_header("Content-Type", "application/json"),
-    write_body_utf8(json),
+    response.write_body_utf8(json),
   ])
 }
 

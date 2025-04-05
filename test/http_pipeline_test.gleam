@@ -17,14 +17,26 @@ pub fn run(app: fn(Context) -> Option(Context), req) {
 
 pub fn empty_app_test() {
   let app = choose([])
-  let req = Request(method: "GET", path: "/", headers: [])
+  let req =
+    Request(
+      method: "GET",
+      path: "/",
+      headers: [],
+      body: bit_array.from_string(""),
+    )
   run(app, req)
   |> should.be_none
 }
 
 pub fn not_found_test() {
   let app = choose([not_found()])
-  let req = Request(method: "GET", path: "/", headers: [])
+  let req =
+    Request(
+      method: "GET",
+      path: "/",
+      headers: [],
+      body: bit_array.from_string(""),
+    )
   run(app, req)
   |> should.be_some
   |> should.equal(Response(bit_array.from_string("not found"), 404, []))
@@ -41,7 +53,13 @@ pub fn router_works_test() {
     ])
 
   let check = fn(path, method, expected_code, expected_body) {
-    let req = Request(method: method, path: path, headers: [])
+    let req =
+      Request(
+        method: method,
+        path: path,
+        headers: [],
+        body: bit_array.from_string(""),
+      )
     run(app, req)
     |> should.be_some
     |> fn(res) {
@@ -62,7 +80,7 @@ pub fn router_works_test() {
 
 pub fn set_header_test() {
   let app = set_header("header", "value")
-  let req = Request("/api", "GET", [])
+  let req = Request("/api", "GET", [], body: bit_array.from_string(""))
   run(app, req)
   |> should.be_some
   |> should.equal(Response(..empty(), headers: [#("header", "value")]))

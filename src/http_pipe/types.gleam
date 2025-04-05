@@ -2,7 +2,12 @@ import gleam/dict
 import gleam/dynamic
 
 pub type Request {
-  Request(path: String, method: String, headers: List(#(String, String)))
+  Request(
+    path: String,
+    method: String,
+    body: BitArray,
+    headers: List(#(String, String)),
+  )
 }
 
 pub type Response {
